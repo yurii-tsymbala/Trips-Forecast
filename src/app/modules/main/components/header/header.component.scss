@@ -1,0 +1,34 @@
+:host {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    height: 5rem;
+    backdrop-filter: blur(10px) brightness(0.8);
+    border-bottom: 1px solid whitesmoke;
+    box-shadow: 0 0 1rem rgba(237, 222, 222, 0.1);
+    z-index: 1;
+}
+
+.navigation-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 1rem;
+    gap: 0.5rem;
+}
+
+.logout-btn {
+    position: absolute;
+    right: 1rem;
+}
+
+.title {
+    color: whitesmoke;
+    font-size:x-large;
+    font-style: italic;
+    font-weight: bolder;
+}

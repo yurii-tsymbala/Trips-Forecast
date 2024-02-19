@@ -1,30 +1,81 @@
 declare var google: any;
 
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  private router = inject(Router);
+  loginForm!: FormGroup;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  passwordFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(5),
+  ]);
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private ngZone: NgZone
+  ) {}
+
   ngOnInit(): void {
-    //we need to initialize google account after page loads
+    this.checkLogin();
+    this.configureForm();
+    this.configureGoogleLogin();
+    this.renderGoogleBtn();
+  }
+
+  onSubmit(): void {
+    const emailInput = this.loginForm.value.emailInput;
+    if (this.loginForm.valid) {
+      this.authService.logIn(emailInput);
+      this.checkLogin();
+    }
+  }
+
+  private onGoogleLogin(resp: any) {
+    if (resp) {
+      const token = JSON.parse(atob(resp.credential.split('.')[1]));
+      console.log(token);
+      this.authService.setToken(token);
+      this.checkLogin();
+    }
+  }
+
+  private configureForm(): void {
+    this.loginForm = new FormGroup({
+      emailInput: this.emailFormControl,
+      passInput: this.passwordFormControl,
+    });
+  }
+
+  private configureGoogleLogin() {
     google.accounts.id.initialize({
-      //we need to get client id, so got to
       client_id:
         '370463056112-ps9obkej0cggpol3fckm8hrr4cpt4fbm.apps.googleusercontent.com',
       callback: (resp: any) => {
-        this.handleLogin(resp);
+        this.onGoogleLogin(resp);
       },
     });
+  }
 
-    //we need to render google button
-    //https://developers.google.com/identity/gsi/web/reference/js-reference - reference for below configuration
+  private renderGoogleBtn() {
     google.accounts.id.renderButton(document.getElementById('google-btn'), {
       theme: 'filled_blue',
       size: 'large',
@@ -33,21 +84,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private decodeToken(token: string) {
-    return JSON.parse(atob(token.split('.')[1])); //we need payload of the token i.e 2nd part[1],first part is header i.e [0], 3rd part is secret
-  }
-
-  handleLogin(resp: any) {
-    //resp : u will get credential from that u need to decrypt the
-    if (resp) {
-      //decode the token
-      const payLoad = this.decodeToken(resp.credential);
-      console.log(payLoad);
-
-      //store it in session
-      localStorage.setItem('loggedInUser', JSON.stringify(payLoad));
-      //naviagte to home page or browse page
-      // this.router.navigate(['browse']);
+  private checkLogin() {
+    if (this.authService.isLoggedIn()) {
+      this.ngZone.run(() => {
+        this.router.navigate(['main']);
+      });
     }
   }
 }

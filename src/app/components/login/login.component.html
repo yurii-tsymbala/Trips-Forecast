@@ -1,3 +1,38 @@
-<form>
-  <div id="google-btn"></div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="input-container">
+    <div class="form-label">Email</div>
+    <input
+      class="form-control"
+      type="email"
+      [formControl]="emailFormControl"
+      placeholder="example@gmail.com"
+      autoComplete="email"
+    />
+    @if (emailFormControl.hasError('email') && (emailFormControl.dirty ||
+    emailFormControl.touched)) {
+    <div class="error">* Please enter a <strong>valid email</strong></div>
+    } @if (emailFormControl.hasError('required') && (emailFormControl.dirty ||
+    emailFormControl.touched)) {
+    <div class="error">* Email is <strong>required</strong></div>
+    }
+  </div>
+
+  <div class="input-container">
+    <div class="form-label">Password</div>
+    <input
+      class="form-control"
+      type="password"
+      [formControl]="passwordFormControl"
+      placeholder="min 5 symbols"
+      autoComplete="current-password"
+    />
+    @if (!passwordFormControl.valid && (passwordFormControl.dirty ||
+    passwordFormControl.touched)) {
+    <div class="error">* Mininum <strong>5 symbols</strong></div>
+    }
+  </div>
+  <div class="btn-container">
+    <button class="login-btn" type="submit">Log In</button>
+    <div id="google-btn"></div>
+  </div>
 </form>

@@ -1,6 +1,16 @@
-  <span class="title">{{userEmail}}</span>
-  <span class="title">{{name}}</span>
-  <span class="title">{{email}}</span>
-  <button class="logout-btn" (click)="logOut()"> Log Out
-  </button>
-  
+<div class="user-container">
+  <div class="info-container">
+    @if(userName) {
+    <div class="title">{{ userName }}</div>
+    <div class="desc-title">{{ userEmail }}</div>
+    } @else {
+    <div class="title">{{ loggedEmail }}</div>
+    }
+  </div>
+  @if(userProfileImg) {
+  <img [src]="userProfileImg" />
+  }
+</div>
+<button class="logout-btn" (click)="logOut()">
+  <img src="/assets/logout.png" />
+</button>

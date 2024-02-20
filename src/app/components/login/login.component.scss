@@ -1,22 +1,83 @@
 :host {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-  
-    background-image: url("/assets/background.jpeg");
-    background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url("/assets/background.jpeg");
+  background-size: cover;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 0.5rem;
+  border: 1px solid rgb(0 0 0 / 44%);
+  background-color: #ffffff73;
+  border-radius: 0.3rem;
+  backdrop-filter: blur(10px);
+
+  .form-control {
+    margin-bottom: 0rem;
   }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    border: 1px solid rgb(0 0 0 / 44%);
-    background-color: #ffffff73;
-    border-radius: 0.3rem;
-    backdrop-filter: blur(10px);
-  }
+}
+
+.form-label {
+  width: 250px;
+  padding-left: 2px;
+  color: rgba(0, 0, 0, 0.574);
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.input-container {
+  height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+input {
+  height: 42px;
+  width: 250px;
+  padding-left: 0.5rem;
+  padding-right: 0.2rem;
+  margin-bottom: 2rem;
+  font: inherit;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.error {
+  width: 250px;
+  margin-top: 0.2rem;
+  padding-left: 0.5rem;
+  text-align: left;
+  color: rgba(255, 0, 0, 0.673);
+  font-size: small;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-btn {
+  height: 42px;
+  width: 250px;
+  border: none;
+  cursor: pointer;
+  color: whitesmoke;
+  font-size: larger;
+  font-weight: bolder;
+  border-radius: 4px;
+  background-color: #3f51b5;
+}

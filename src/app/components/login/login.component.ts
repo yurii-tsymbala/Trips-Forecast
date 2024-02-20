@@ -4,6 +4,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -13,7 +14,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -43,6 +44,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const emailInput = this.loginForm.value.emailInput;
+    console.log(this.loginForm);
+    
     if (this.loginForm.valid) {
       this.authService.logIn(emailInput);
       this.checkLogin();

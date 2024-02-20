@@ -32,7 +32,7 @@
     }
   </div>
   <div class="btn-container">
-    <button class="login-btn" type="submit">Log In</button>
+    <button [disabled]="!loginForm.valid" class="login-btn" type="submit">Log In</button>
     <div id="google-btn"></div>
   </div>
 </form>

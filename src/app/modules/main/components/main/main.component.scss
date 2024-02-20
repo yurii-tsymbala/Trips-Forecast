@@ -1,12 +1,42 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    
-    background-image: url("/assets/background.jpeg");
-    background-size: cover;
-    overflow: hidden;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+
+  background-image: url("/assets/background.jpeg");
+  background-size: cover;
+  overflow: hidden;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4rem;
+  width: 100%;
+  height: 100vh;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.trip-container {
+  width: 100%;
+}
+
+.weather-container {
+  width: 100%;
+}
+
+.data-title {
+  width: 100%;
+  background-color: azure;
+}

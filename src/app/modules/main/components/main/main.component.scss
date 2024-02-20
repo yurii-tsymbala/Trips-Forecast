@@ -6,9 +6,9 @@
   width: 100%;
   height: 100vh;
 
-  background-image: url("/assets/background.jpeg");
-  background-size: cover;
-  overflow: hidden;
+  // background-image: url("/assets/background.jpeg");
+  // background-size: cover;
+  // overflow: hidden;
 }
 
 .main-container {
@@ -16,6 +16,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 4rem;
+  padding-left: 2rem;
   width: 100%;
   height: 100vh;
 }
@@ -27,23 +28,59 @@
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  background-color: red;
+  padding-right: 2rem;
 }
 
 .trip-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
-  height: 10rem;
-  background-color: beige;
+  height: 16rem;
+  gap: 2rem;
+  background-color: white;
+}
+
+.trips-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 40rem;
+  height: 16rem;
+  gap: 3rem;
 }
 
 .weather-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
-  height: 10rem;
-  background-color: blanchedalmond;
+  height: 16rem;
+  gap: 2rem;
 }
 
 .data-title {
   width: 100%;
-  height: 5rem;
-  background-color: azure;
+  height: 4rem;
+  padding-top: 1rem;
+  font-size: 22px;
+  font-weight: bolder;
+}
+
+.data-subtitle {
+  width: 100%;
+  height: 3rem;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.trip-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 11rem;
+  width: 11rem;
+  background-color: rgb(248, 248, 248);
+  border: 0.1px solid rgba(0, 0, 0, 0.2);
 }

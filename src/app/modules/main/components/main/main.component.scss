@@ -24,19 +24,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
+  height: 100%;
+  background-color: red;
 }
 
 .trip-container {
   width: 100%;
+  height: 10rem;
+  background-color: beige;
 }
 
 .weather-container {
   width: 100%;
+  height: 10rem;
+  background-color: blanchedalmond;
 }
 
 .data-title {
   width: 100%;
+  height: 5rem;
   background-color: azure;
 }

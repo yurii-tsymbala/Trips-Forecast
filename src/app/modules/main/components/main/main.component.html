@@ -13,7 +13,7 @@
       ></trip>
       
       </div>
-      <button class="trip-btn">
+      <button class="trip-btn" (click)="onTripAdd()">
         <div>+</div>
         <div>Add Trip</div>
       </button>
@@ -28,3 +28,4 @@
   </div>
   <today/>
 </div>
+<modal #modal (saveTrip)="onTripSave()"></modal>

@@ -5,9 +5,13 @@
     <search></search>
     <div class="trip-container">
       <div class="trips-container">
-        <trip></trip>
-        <trip></trip>
-        <trip></trip>
+        <trip
+        *ngFor="let trip of trips$ | async; index as i"
+        [trip]="trip"
+        (tripDetail)="onTripDetail($event)"
+        [ngClass]="{ selected: selectedItem === i}"
+      ></trip>
+      
       </div>
       <button class="trip-btn">
         <div>+</div>

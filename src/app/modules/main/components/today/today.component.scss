@@ -1,12 +1,71 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 30rem;
-    height: 100%;
-  
-    background-image: url("/assets/forecastbg.jpg");
-    background-size: cover;
-    overflow: hidden;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30rem;
+  height: 100%;
+
+  background-image: url("/assets/forecastbg.jpg");
+  background-size: cover;
+  overflow: hidden;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 6rem;
+  color: white;
+}
+
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 3rem;
+}
+
+.weather-day {
+  font-size: 32px;
+  font-weight: bolder;
+}
+
+.weather-temp {
+  font-size: 60px;
+}
+
+.weather-city {
+  font-size: 26px;
+  font-weight: lighter;
+}
+
+.timer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.date-title {
+  font-size: large;
+  font-weight: bold;
+}
+
+.date-subtitle {
+  font-size: xx-small;
+  color: rgb(226, 226, 226);
+}

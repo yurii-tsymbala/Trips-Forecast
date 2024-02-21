@@ -3,7 +3,7 @@ export default function getFormattedDate(time: number): string {
       return '--';
     }
   
-    const date = new Date(time);
+    const date = new Date(time * 1000);
   
     const day = date.getDate().toString();
     const month = date.getMonth();

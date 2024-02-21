@@ -11,11 +11,11 @@ import { Trip } from '../../models/Trip';
 })
 export class TripComponent {
   @Input() trip!: Trip;
-  @Output() tripDetail = new EventEmitter<number>();
+  @Output() tripDetail = new EventEmitter<Trip>();
 
   @HostListener('click')
   onDetail(): void {
-    this.tripDetail.emit(this.trip.id);
+    this.tripDetail.emit(this.trip);
   }
 
   get dateFormatted(): string {

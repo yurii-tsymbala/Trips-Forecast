@@ -8,6 +8,7 @@ import { TripService } from '../../services/trip.service';
 import { Observable } from 'rxjs';
 import { Trip } from '../../models/Trip';
 import { CommonModule } from '@angular/common';
+import { Weather } from '../../models/Weather';
 
 @Component({
   selector: 'main',
@@ -26,25 +27,27 @@ import { CommonModule } from '@angular/common';
 export class MainComponent implements OnInit {
   selectedItem: number = -1;
   trips$!: Observable<Trip[]>;
+  weathers$!: Observable<Weather[]>;
 
   constructor(private tripService: TripService) {}
 
   ngOnInit(): void {
     this.fetchBooks();
-    this.observeTrips();
+    this.observeData();
   }
 
-  private observeTrips(): void {
+  private observeData(): void {
     this.trips$ = this.tripService.updatedTrips$;
+    this.weathers$ = this.tripService.updatedWeathers$;
   }
 
   private fetchBooks(): void {
     this.tripService.fetchTrips();
   }
 
-  onTripDetail(tripId: number) {
-    this.selectedItem = tripId;
-    // show todayComponent with today weather data
-    // show forecast for all trip
+  onTripDetail(trip: Trip) {
+    this.selectedItem = trip.id;
+    this.tripService.fetchForecast(trip);
+    this.tripService.fetchForecastToday(trip);
   }
 }

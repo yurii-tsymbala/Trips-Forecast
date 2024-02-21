@@ -20,14 +20,11 @@
     </div>
     <div class="data-subtitle">Week</div>
     <div class="weather-container">
-      <weather></weather>
-      <weather></weather>
-      <weather></weather>
-      <weather></weather>
-      <weather></weather>
-      <weather></weather>
-      <weather></weather>
+      <weather
+        *ngFor="let weather of weathers$ | async; index as i"
+        [weather]="weather"
+      ></weather>
     </div>
   </div>
-  <today></today>
+  <today/>
 </div>

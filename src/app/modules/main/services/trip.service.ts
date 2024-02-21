@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Trip } from '../models/Trip';
+import { Weather } from '../models/Weather';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +9,34 @@ import { Trip } from '../models/Trip';
 export class TripService {
   private tripsKey = 'trips';
   private trips$ = new BehaviorSubject<Trip[]>([]);
+  private weathers$ = new BehaviorSubject<Weather[]>([]);
+  private currentWeather$ = new Subject<Weather>();
+  private currentTrip$ = new Subject<Trip>();
   readonly updatedTrips$ = this.trips$.asObservable();
+  readonly updatedWeathers$ = this.weathers$.asObservable();
+  readonly updatedCurrentWeather$ = this.currentWeather$.asObservable();
+  readonly updatedCurrentTrip$ = this.currentTrip$.asObservable();
 
   constructor() {
     this.loadMock();
+  }
+
+  async fetchForecast(trip: Trip) {
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${trip.city}/${trip.startDate}/${trip.endDate}?key=YFYZNTBA382JYNXFFMPZ37GC9&contentType=json`);
+    const data = await response.json();
+
+    const weathers = data["days"] as Weather[];  
+    this.weathers$.next(weathers);  
+  }
+
+  async fetchForecastToday(trip: Trip) {
+    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${trip.city}/today?unitGroup=metric&include=days &key=YFYZNTBA382JYNXFFMPZ37GC9&contentType=json`);
+    const data = await response.json();
+
+    const currentWeather = data["days"][0] as Weather;
+    currentWeather.address = data["address"];
+    this.currentWeather$.next(currentWeather); 
+    this.currentTrip$.next(trip);
   }
 
   fetchTrips(): void {

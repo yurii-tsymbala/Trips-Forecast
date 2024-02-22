@@ -30,10 +30,11 @@ export class MainComponent implements OnInit {
   selectedItem: number = -1;
   trips$!: Observable<Trip[]>;
   weathers$!: Observable<Weather[]>;
+  scrollIndex = 0;
 
   @ViewChild('modal', { static: false }) modal!: ModalComponent;
 
-  constructor(private tripService: TripService) {}
+  constructor(private tripService: TripService) { }
 
   ngOnInit(): void {
     this.fetchTrips();
@@ -56,10 +57,22 @@ export class MainComponent implements OnInit {
   }
 
   onTripSave() {
-  // save trip to service;
+    // save trip to service;
   }
 
   onTripAdd() {
-    this.modal.open();
+    this.modal.onOpen();
+  }
+
+  onPrevClick() {
+    this.scrollIndex--;
+  }
+
+  onNextClick() {
+    this.scrollIndex++;
+  }
+
+  get scrollStyle(): string {
+    return `translate(-${this.scrollIndex * 14}rem)`;
   }
 }

@@ -3,29 +3,31 @@
   <div class="data-container">
     <div class="data-title">Weather Forecast</div>
     <search></search>
-    <div class="trip-container">
+    <div class="trip-wrapper">
+
       <div class="trips-container">
-        <trip
-        *ngFor="let trip of trips$ | async; index as i"
-        [trip]="trip"
-        (tripDetail)="onTripDetail($event)"
-        [ngClass]="{ selected: selectedItem === i}"
-      ></trip>
-      
+        <div class="scroll-container" [style.transform]="scrollStyle">
+          <trip *ngFor="let trip of trips$ | async; index as i" [trip]="trip" (tripDetail)="onTripDetail($event)"
+            [ngClass]="{ selected: selectedItem === i}"></trip>
+        </div>
       </div>
+
+      <img *ngIf="(scrollIndex)>0" class="prev" src="assets/arrow.png" (click)="onPrevClick()">
+      <img *ngIf="((trips$ | async)?.length || 0)>(scrollIndex + 3)" class="next" src="assets/arrow.png"
+        (click)="onNextClick()">
+
       <button class="trip-btn" (click)="onTripAdd()">
         <div>+</div>
         <div>Add Trip</div>
       </button>
     </div>
-    <div class="data-subtitle">Week</div>
-    <div class="weather-container">
-      <weather
-        *ngFor="let weather of weathers$ | async; index as i"
-        [weather]="weather"
-      ></weather>
+    <div class="weather" [class.showed]="((weathers$ | async)?.length || 0) > 0">
+      <div *ngIf="((weathers$ | async)?.length || 0) > 0" class="data-subtitle">Week</div>
+      <div class="weather-container">
+        <weather *ngFor="let weather of weathers$ | async; index as i" [weather]="weather"></weather>
+      </div>
     </div>
   </div>
-  <today/>
+  <today />
 </div>
 <modal #modal (saveTrip)="onTripSave()"></modal>

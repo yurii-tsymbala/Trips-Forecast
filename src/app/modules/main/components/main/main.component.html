@@ -17,8 +17,8 @@
         (click)="onNextClick()">
 
       <button class="trip-btn" (click)="onTripAdd()">
-        <div>+</div>
-        <div>Add Trip</div>
+        <div class="trip-title-icon">+</div>
+        <div class="trip-title">Add Trip</div>
       </button>
     </div>
     <div class="weather" [class.showed]="((weathers$ | async)?.length || 0) > 0">

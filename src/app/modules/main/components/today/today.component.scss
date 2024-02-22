@@ -1,13 +1,28 @@
 :host {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  right: 0;
+  top: 0;
+
   width: 30rem;
   height: 100%;
 
   background-image: url("/assets/forecastbg.jpg");
   background-size: cover;
+  background-position: center;
   overflow: hidden;
+
+  opacity: 0;
+  transform: translateX(200px);
+  transition: opacity 1s ease, transform 1s ease;
+
+  &.showed {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 
 .data-container {
@@ -35,7 +50,16 @@
 }
 
 .weather-temp {
+  display: flex;
+  align-items: flex-start;
+  justify-self: center;
+
   font-size: 60px;
+
+  .degreeSymbol {
+    margin-top: 10px;
+    font-size: 30px;
+  }
 }
 
 .weather-city {

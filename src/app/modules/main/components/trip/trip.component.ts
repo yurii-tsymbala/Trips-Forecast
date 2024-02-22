@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import getFormattedDate from '../../models/FormattedDate';
+import { getFormattedDate } from '../../models/FormattedDate';
 import { Trip } from '../../models/Trip';
 
 @Component({
@@ -20,6 +20,10 @@ export class TripComponent {
 
   get dateFormatted(): string {
     return getFormattedDate(this.trip.startDate) + " - " + getFormattedDate(this.trip.endDate);
+  }
+
+  get imageUrl() {
+    return `assets/cities/${this.trip.city.toLowerCase()}.jpg`;
   }
 }
 

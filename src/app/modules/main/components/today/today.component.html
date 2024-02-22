@@ -1,25 +1,25 @@
 <div class="data-container">
     <div class="weather-container">
 <div class="weather-day">{{dayFormatted}}</div>
-<div class="weather-temp">{{tempFormatted}}</div>
+<div class="weather-temp">{{tempFormatted}}<span class="degreeSymbol">°C</span></div>
 <div class="weather-city">{{currentWeather?.address}}</div>
     </div>
 
     <div class="timer-container">
         <div class="date-container">
-            <div class="date-title">2</div>
+            <div class="date-title">{{days}}</div>  
             <div class="date-subtitle">DAYS</div>
         </div>
         <div class="date-container">
-            <div class="date-title">4</div>
+            <div class="date-title">{{hours}}</div>
             <div class="date-subtitle">HOURS</div>
         </div>
         <div class="date-container">
-            <div class="date-title">24</div>
+            <div class="date-title">{{minutes}}</div>
             <div class="date-subtitle">MINUTES</div>
         </div>
         <div class="date-container">
-            <div class="date-title">34</div>
+            <div class="date-title">{{seconds}}</div>
             <div class="date-subtitle">SECONDS</div>
 
         </div>

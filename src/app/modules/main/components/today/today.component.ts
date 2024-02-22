@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { Weather } from '../../models/Weather';
 import { TripService } from '../../services/trip.service';
-import { take } from 'rxjs/internal/operators/take';
 import { Trip } from '../../models/Trip';
-import { takeUntil } from 'rxjs';
+import { getCoundownDate, getFormattedDay } from '../../models/FormattedDate';
 
 @Component({
   selector: 'today',
@@ -15,39 +14,63 @@ import { takeUntil } from 'rxjs';
 export class TodayComponent implements OnInit {
   currentWeather?: Weather;
   currentTrip?: Trip;
+  updateIntervalId: number = 0;
+
+  days = 0;
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
 
   constructor(private tripService: TripService) {}
 
   ngOnInit(): void {
     this.observeData();
+
+    setInterval(() => this.updateDate(), 1000);
+  }
+
+  private updateDate() {
+    if (!this.currentTrip) return;
+
+    const { days, hours, minutes, seconds } = getCoundownDate(
+      this.currentTrip.startDate
+    );
+
+    this.days = days;
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
   }
 
   private observeData() {
     this.tripService.updatedCurrentWeather$.subscribe(
-      (currentWeather) => (this.currentWeather = currentWeather)
+      (currentWeather: Weather) => (this.currentWeather = currentWeather)
     );
 
-    this.tripService.updatedCurrentTrip$.subscribe(
-      (currentTrip) => (this.currentTrip = currentTrip)
-    );
+    this.tripService.updatedCurrentTrip$.subscribe((currentTrip: Trip) => {
+      this.currentTrip = currentTrip;
+      this.updateDate();
+    });
   }
 
   get tempFormatted(): string {
     if (this.currentWeather) {
-      return this.currentWeather.temp + '*';
+      return `${this.currentWeather.temp}`;
     } else {
-      return "";
+      return '';
     }
   }
 
   get dayFormatted(): string {
     if (this.currentWeather) {
-      const date = new Date(this.currentWeather.datetimeEpoch * 1000);
-      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const day = daysOfWeek[date.getDay()];
-      return day;
+      return getFormattedDay(this.currentWeather.datetimeEpoch);
     } else {
       return '';
     }
+  }
+
+  @HostBinding('class.showed')
+  get showed(): boolean {
+    return !!this.currentWeather;
   }
 }

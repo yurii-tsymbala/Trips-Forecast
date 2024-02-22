@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Weather } from '../../models/Weather';
+import { getFormattedDay } from '../../models/FormattedDate';
 
 @Component({
   selector: 'weather',
@@ -12,13 +13,18 @@ export class WeatherComponent {
   @Input() weather!: Weather;
 
   get tempFormatted(): string {
-    return this.weather.tempmax + '*/' + this.weather.tempmin + '*';
+    return farenheitToCelcius(this.weather.tempmax) + '°/' + farenheitToCelcius(this.weather.tempmin) + '°';
   }
 
   get dayFormatted(): string {
-    const date = new Date(this.weather.datetimeEpoch * 1000);
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const day = daysOfWeek[date.getDay()];
-    return day;
+   return getFormattedDay(this.weather.datetimeEpoch);
   }
+
+  get imageUrl() {
+    return `assets/weather/${this.weather.icon.toLowerCase()}.png`;
+  }
+}
+
+const farenheitToCelcius = (fahrenheit: number) => {
+  return Math.round((fahrenheit - 32) * 5 / 9);
 }

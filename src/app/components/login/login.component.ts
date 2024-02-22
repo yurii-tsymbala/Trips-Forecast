@@ -54,6 +54,8 @@ export class LoginComponent implements OnInit {
 
   private onGoogleLogin(resp: any) {
     if (resp) {
+      console.log(resp.credential);
+
       const token = JSON.parse(atob(resp.credential.split('.')[1]));
       console.log(token);
       this.authService.setToken(token);

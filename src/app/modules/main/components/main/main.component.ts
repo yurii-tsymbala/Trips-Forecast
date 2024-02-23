@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
 
   trips$!: Observable<Trip[]>;
   weathers$!: Observable<Weather[]>;
-  selectedItem: number = -1;
+  selectedIndex: number = -1;
   scrollIndex = 0;
 
   constructor(private tripService: TripService) { }
@@ -33,14 +33,22 @@ export class MainComponent implements OnInit {
     this.observeData();
   }
 
+  onTripSelect(index: number): void {
+    this.selectedIndex = index;
+  }
+
   onTripDetail(trip: Trip): void {
-    this.selectedItem = trip.id;
     this.tripService.fetchForecast(trip);
     this.tripService.fetchForecastToday(trip);
   }
 
   onTripAdd(): void {
     this.modal.onOpen();
+  }
+
+  onSearch(): void {
+    this.selectedIndex = -1;
+    this.scrollIndex = 0;
   }
 
   onPrevClick(): void {

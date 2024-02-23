@@ -2,15 +2,16 @@
 <div class="main-container">
   <div class="data-container">
     <div class="data-title">Weather <b>Forecast</b></div>
-    <search></search>
+    <search (inputSearch)="onSearch()"></search>
     <div class="trip-wrapper">
       <div class="trips-container">
         <div class="scroll-container" [style.transform]="scrollStyle">
           <trip
-            *ngFor="let trip of trips$ | async; index as i"
+            *ngFor="let trip of trips$ | async; let i = index"
             [trip]="trip"
             (tripDetail)="onTripDetail($event)"
-            [ngClass]="{ selected: selectedItem === i }"
+            [ngClass]="{ selected: i === selectedIndex }"
+            (click)="onTripSelect(i)"
           ></trip>
         </div>
       </div>

@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private onGoogleLogin(resp: any) {
+  private onGoogleLogin(resp: any): void {
     if (resp) {
       console.log(resp.credential);
 
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private configureGoogleLogin() {
+  private configureGoogleLogin(): void {
     google.accounts.id.initialize({
       client_id:
         '370463056112-ps9obkej0cggpol3fckm8hrr4cpt4fbm.apps.googleusercontent.com',
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private renderGoogleBtn() {
+  private renderGoogleBtn(): void {
     google.accounts.id.renderButton(document.getElementById('google-btn'), {
       theme: 'filled_blue',
       size: 'large',
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private checkLogin() {
+  private checkLogin(): void {
     if (this.authService.isLoggedIn()) {
       this.ngZone.run(() => {
         this.router.navigate(['main']);

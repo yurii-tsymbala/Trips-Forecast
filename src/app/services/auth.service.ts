@@ -16,7 +16,7 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     return this.getToken() !== null;
   }
 
@@ -24,7 +24,7 @@ export class AuthService {
     this.setToken(email);
   }
 
-  logOut() {
+  logOut(): void {
     localStorage.removeItem(this.tokenKey);
     google.accounts.id.disableAutoSelect();
   }

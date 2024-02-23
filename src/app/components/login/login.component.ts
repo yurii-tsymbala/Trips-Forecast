@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const emailInput = this.loginForm.value.emailInput;
-    console.log(this.loginForm);
     
     if (this.loginForm.valid) {
       this.authService.logIn(emailInput);
@@ -54,11 +53,10 @@ export class LoginComponent implements OnInit {
 
   private onGoogleLogin(resp: any): void {
     if (resp) {
-      console.log(resp.credential);
-
-      const token = JSON.parse(atob(resp.credential.split('.')[1]));
-      console.log(token);
-      this.authService.setToken(token);
+      const googleTokenDecoder = require('jsonwebtoken');
+      const decodedToken = googleTokenDecoder.decode(resp.credential, { complete: true });
+      console.log(decodedToken);
+      this.authService.setToken(decodedToken);
       this.checkLogin();
     }
   }

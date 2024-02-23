@@ -8,7 +8,7 @@
     }
   </div>
   @if(userProfileImg) {
-  <img [src]="userProfileImg" />
+  <img [src]="userProfileImg" referrerPolicy="no-referrer" />
   }
 </div>
 <button class="logout-btn" (click)="logOut()">

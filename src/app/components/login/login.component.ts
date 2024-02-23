@@ -1,6 +1,10 @@
 declare var google: any;
 
 import { Component, NgZone, OnInit } from '@angular/core';
+// import googleTokenDecoder from 'jsonwebtoken';
+
+import { jwtDecode } from "jwt-decode";
+
 import {
   FormControl,
   FormGroup,
@@ -53,9 +57,8 @@ export class LoginComponent implements OnInit {
 
   private onGoogleLogin(resp: any): void {
     if (resp) {
-      const googleTokenDecoder = require('jsonwebtoken');
-      const decodedToken = googleTokenDecoder.decode(resp.credential, { complete: true });
-      console.log(decodedToken);
+      const decodedToken = jwtDecode(resp.credential);
+
       this.authService.setToken(decodedToken);
       this.checkLogin();
     }

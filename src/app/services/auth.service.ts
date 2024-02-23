@@ -1,6 +1,7 @@
 declare var google: any;
 
 import { Injectable } from '@angular/core';
+import { JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private tokenKey = 'token';
 
-  setToken(token: string): void {
+  setToken(token: JwtPayload | string): void {
     localStorage.setItem(this.tokenKey, JSON.stringify(token));
   }
 

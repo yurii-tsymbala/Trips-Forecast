@@ -7,7 +7,8 @@ import { Weather } from '../models/Weather';
   providedIn: 'root',
 })
 export class TripService {
-  private tripsKey = 'trips';
+  private readonly tripsKey = 'trips';
+  private readonly apiKey = 'CARMJJR6XZR3BHGY5S8HWT7PK';
   private trips$ = new BehaviorSubject<Trip[]>([]);
   private weathers$ = new BehaviorSubject<Weather[]>([]);
   private currentWeather$ = new Subject<Weather>();
@@ -21,16 +22,16 @@ export class TripService {
     this.loadMock();
   }
 
-  async fetchForecast(trip: Trip) {
-    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${trip.city}/${trip.startDate}/${trip.endDate}?key=YFYZNTBA382JYNXFFMPZ37GC9&contentType=json`);
+  async fetchForecast(trip: Trip): Promise<void> {
+    const response = await fetch(this.forecastUrl(trip));
     const data = await response.json();
 
     const weathers = data["days"] as Weather[];  
     this.weathers$.next(weathers);  
   }
 
-  async fetchForecastToday(trip: Trip) {
-    const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${trip.city}/today?unitGroup=metric&include=days &key=YFYZNTBA382JYNXFFMPZ37GC9&contentType=json`);
+  async fetchForecastToday(trip: Trip): Promise<void> {
+    const response = await fetch(this.forecastTodayUrl(trip));
     const data = await response.json();
 
     const currentWeather = data["days"][0] as Weather;
@@ -40,14 +41,14 @@ export class TripService {
   }
 
   fetchTrips(): void {
-    this.trips$.next(this.storedTrips);
+    const trips = this.storedTrips;
+    trips.sort( (firstTrip, secondTrip) => firstTrip.startDate - secondTrip.startDate);
+    this.trips$.next(trips);
   }
 
   fetchTripsByInput(input: string): void {
     const trips = this.storedTrips;
-
     const filteredTrips = trips.filter((trip) => trip.city.toLocaleLowerCase().includes(input));
-
     if (filteredTrips) {
       this.trips$.next(filteredTrips);
     }
@@ -55,37 +56,44 @@ export class TripService {
 
   addTrip(trip: Trip): void {
     const trips = this.storedTrips;
-
     trips.push(trip);
-
     localStorage.setItem(this.tripsKey, JSON.stringify(trips));
-
     this.fetchTrips();
   }
 
   getTripById(id: number): Trip {
     const trips = this.storedTrips;
-
     const tripInDB = trips.find((el) => el.id === id) as Trip;
-
     return tripInDB;
+  }
+
+  get storedTripsLength(): number {
+    return this.storedTrips.length;
   }
 
   private get storedTrips(): Trip[] {
     return JSON.parse(localStorage.getItem(this.tripsKey) || '{}') as Trip[];
   }
 
-  loadMock(): void {
+  private forecastUrl(trip: Trip): string {
+   return `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/
+   ${trip.city}/${trip.startDate}/${trip.endDate}?key=${this.apiKey}`
+  }
+
+  private forecastTodayUrl(trip: Trip): string {
+   return `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/
+   ${trip.city}/today?unitGroup=metric&include=days&key=${this.apiKey}`
+  }
+
+  private loadMock(): void {
     if (
       localStorage.getItem(this.tripsKey) === null ||
       localStorage.getItem(this.tripsKey) == undefined
     ) {
       let trips = [
-        new Trip(0, 'Berlin', 1708479173, 1708825553),
-        new Trip(1, 'Kyiv', 1708998353, 1709171153),
-        new Trip(2, 'Berlin', 1708998353, 1709171153),
-        new Trip(3, 'Kyiv', 1708998353, 1709171153),
-        new Trip(4, 'Berlin', 1708998353, 1709171153),
+        new Trip(0, 'Kyiv', 1708976184, 1709235384),
+        new Trip(1, 'Barcelona', 1708803384, 1709667384),
+        new Trip(2, 'Amsterdam', 1709171655, 1709862855),
       ];
 
       localStorage.setItem(this.tripsKey, JSON.stringify(trips));

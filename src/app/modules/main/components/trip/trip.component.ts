@@ -22,7 +22,7 @@ export class TripComponent {
     return getFormattedDate(this.trip.startDate) + " - " + getFormattedDate(this.trip.endDate);
   }
 
-  get imageUrl() {
+  get imageUrl(): string {
     return `assets/cities/${this.trip.city.toLowerCase()}.jpg`;
   }
 }

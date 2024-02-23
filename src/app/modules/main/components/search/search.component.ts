@@ -14,7 +14,7 @@ export class SearchComponent {
 
   constructor(private tripService: TripService) {}
 
-  onInput() {
+  onInput(): void {
     if (this.inputValue) {
       this.tripService.fetchTripsByInput(this.inputValue);
     } else {

@@ -6,7 +6,7 @@ export function getFormattedDate(time: number): string {
   const date = new Date(time * 1000);
 
   const day = date.getDate().toString();
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
   return `${day}.${month}.${year}`;

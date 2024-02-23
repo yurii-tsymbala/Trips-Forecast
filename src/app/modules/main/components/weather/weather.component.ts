@@ -13,18 +13,23 @@ export class WeatherComponent {
   @Input() weather!: Weather;
 
   get tempFormatted(): string {
-    return farenheitToCelcius(this.weather.tempmax) + '°/' + farenheitToCelcius(this.weather.tempmin) + '°';
+    return (
+      farenheitToCelcius(this.weather.tempmax) +
+      '°/' +
+      farenheitToCelcius(this.weather.tempmin) +
+      '°'
+    );
   }
 
   get dayFormatted(): string {
-   return getFormattedDay(this.weather.datetimeEpoch);
+    return getFormattedDay(this.weather.datetimeEpoch);
   }
 
-  get imageUrl() {
+  get imageUrl(): string {
     return `assets/weather/${this.weather.icon.toLowerCase()}.png`;
   }
 }
 
 const farenheitToCelcius = (fahrenheit: number) => {
-  return Math.round((fahrenheit - 32) * 5 / 9);
-}
+  return Math.round(((fahrenheit - 32) * 5) / 9);
+};

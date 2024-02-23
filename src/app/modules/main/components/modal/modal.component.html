@@ -1,41 +1,49 @@
-<form  #myModal class="form" [formGroup]="modalForm" (ngSubmit)="onSubmit()">
-    <div class="form-header">
-        <div class="header-title">Create trip</div>
-        <div class="header-cancel" (click)="onCancel()">X</div>
+<form #myModal class="form" [formGroup]="modalForm" (ngSubmit)="onSubmit()">
+  <div class="form-header">
+    <div class="header-title">Create trip</div>
+    <img class="header-cancel" src="assets/x_icon.png" (click)="onCancel()" />
+  </div>
+  <div class="main-container">
+    <div class="select-container">
+      <div class="form-label">* City</div>
+      <select [formControl]="cityFormControl" required>
+        <option value="" disabled selected hidden>Please select a city</option>
+        <option *ngFor="let city of cities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
     </div>
-    <div class="main-container">
 
-        <div class="select-container">
-            <div class="form-label">* City</div>
-            <input
-              class="form-control"
-              [formControl]="cityFormControl"
-              placeholder="Please select a city"
-            />
-          </div>
-
-          <div class="date-container">
-            <div class="form-label">* Start date</div>
-            <input
-              class="form-control"
-              [formControl]="startDateFormControl"
-              placeholder="Select date"
-            />
-          </div>
-
-          <div class="date-container">
-            <div class="form-label">* End date</div>
-            <input
-              class="form-control"
-              [formControl]="endDateFormControl"
-              placeholder="Select date"
-            />
-          </div>
-
+    <div class="date-container">
+      <div class="form-label">* Start date</div>
+      <input
+        (change)="onStartDateChanged($event)"
+        id="startDate"
+        type="date"
+        class="form-control"
+        [formControl]="startDateFormControl"
+        required
+      />
     </div>
-    <div class="form-footer">
-            <button class="form-btn cancel" (click)="onCancel()">Cancel</button>
-            <button class="form-btn save" type="submit">Save</button>
+
+    <div class="date-container">
+      <div class="form-label">* End date</div>
+      <input
+        (change)="onEndDateChanged($event)"
+        id="endDate"
+        type="date"
+        class="form-control"
+        [formControl]="endDateFormControl"
+        required
+      />
     </div>
-    
-  </form>
+  </div>
+  <div class="form-footer">
+    <button type="button" class="form-btn cancel" (click)="onCancel()">
+      Cancel
+    </button>
+    <button type="submit" class="form-btn save" [disabled]="!modalForm.valid">
+      Save
+    </button>
+  </div>
+</form>

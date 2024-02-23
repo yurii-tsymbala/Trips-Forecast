@@ -14,31 +14,45 @@ import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'main',
   standalone: true,
-  imports: [
-    HeaderComponent,
-    SearchComponent,
-    TripComponent,
-    WeatherComponent,
-    TodayComponent,
-    ModalComponent,
-    CommonModule,
-  ],
+  imports: [HeaderComponent, SearchComponent, TripComponent, WeatherComponent, TodayComponent, ModalComponent, CommonModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
 })
 export class MainComponent implements OnInit {
-  selectedItem: number = -1;
+  @ViewChild('modal', { static: false }) modal!: ModalComponent;
+
   trips$!: Observable<Trip[]>;
   weathers$!: Observable<Weather[]>;
+  selectedItem: number = -1;
   scrollIndex = 0;
-
-  @ViewChild('modal', { static: false }) modal!: ModalComponent;
 
   constructor(private tripService: TripService) { }
 
   ngOnInit(): void {
     this.fetchTrips();
     this.observeData();
+  }
+
+  onTripDetail(trip: Trip): void {
+    this.selectedItem = trip.id;
+    this.tripService.fetchForecast(trip);
+    this.tripService.fetchForecastToday(trip);
+  }
+
+  onTripAdd(): void {
+    this.modal.onOpen();
+  }
+
+  onPrevClick(): void {
+    this.scrollIndex--;
+  }
+
+  onNextClick(): void {
+    this.scrollIndex++;
+  }
+
+  get scrollStyle(): string {
+    return `translate(-${this.scrollIndex * 14}rem)`;
   }
 
   private observeData(): void {
@@ -48,31 +62,5 @@ export class MainComponent implements OnInit {
 
   private fetchTrips(): void {
     this.tripService.fetchTrips();
-  }
-
-  onTripDetail(trip: Trip) {
-    this.selectedItem = trip.id;
-    this.tripService.fetchForecast(trip);
-    this.tripService.fetchForecastToday(trip);
-  }
-
-  onTripSave() {
-    // save trip to service;
-  }
-
-  onTripAdd() {
-    this.modal.onOpen();
-  }
-
-  onPrevClick() {
-    this.scrollIndex--;
-  }
-
-  onNextClick() {
-    this.scrollIndex++;
-  }
-
-  get scrollStyle(): string {
-    return `translate(-${this.scrollIndex * 14}rem)`;
   }
 }

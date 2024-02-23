@@ -14,43 +14,17 @@ import { getCoundownDate, getFormattedDay } from '../../models/FormattedDate';
 export class TodayComponent implements OnInit {
   currentWeather?: Weather;
   currentTrip?: Trip;
-  updateIntervalId: number = 0;
 
   days = 0;
   hours = 0;
   minutes = 0;
   seconds = 0;
 
-  constructor(private tripService: TripService) {}
+  constructor(private tripService: TripService) { }
 
   ngOnInit(): void {
     this.observeData();
-
-    setInterval(() => this.updateDate(), 1000);
-  }
-
-  private updateDate() {
-    if (!this.currentTrip) return;
-
-    const { days, hours, minutes, seconds } = getCoundownDate(
-      this.currentTrip.startDate
-    );
-
-    this.days = days;
-    this.hours = hours;
-    this.minutes = minutes;
-    this.seconds = seconds;
-  }
-
-  private observeData() {
-    this.tripService.updatedCurrentWeather$.subscribe(
-      (currentWeather: Weather) => (this.currentWeather = currentWeather)
-    );
-
-    this.tripService.updatedCurrentTrip$.subscribe((currentTrip: Trip) => {
-      this.currentTrip = currentTrip;
-      this.updateDate();
-    });
+    setInterval(() => this.updateCountDown(), 1000);
   }
 
   get tempFormatted(): string {
@@ -72,5 +46,35 @@ export class TodayComponent implements OnInit {
   @HostBinding('class.showed')
   get showed(): boolean {
     return !!this.currentWeather;
+  }
+
+  get imageUrl(): string {
+    if (!this.currentWeather)
+      return '';
+    return `assets/weather/${this.currentWeather.icon.toLowerCase()}.png`;
+  }
+
+  private updateCountDown() {
+    if (!this.currentTrip) return;
+
+    const { days, hours, minutes, seconds } = getCoundownDate(
+      this.currentTrip.startDate
+    );
+
+    this.days = days;
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
+  }
+
+  private observeData() {
+    this.tripService.updatedCurrentWeather$.subscribe(
+      (currentWeather: Weather) => (this.currentWeather = currentWeather)
+    );
+
+    this.tripService.updatedCurrentTrip$.subscribe((currentTrip: Trip) => {
+      this.currentTrip = currentTrip;
+      this.updateCountDown();
+    });
   }
 }

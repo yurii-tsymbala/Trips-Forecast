@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TripService } from '../../services/trip.service';
 
@@ -10,12 +10,15 @@ import { TripService } from '../../services/trip.service';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
+  @Output() inputSearch = new EventEmitter();
   inputValue: string = '';
 
   constructor(private tripService: TripService) {}
 
   onInput(): void {
     if (this.inputValue) {
+      this.inputSearch.emit();
+      this.tripService.fetchTrips();
       this.tripService.fetchTripsByInput(this.inputValue);
     } else {
       this.tripService.fetchTrips();

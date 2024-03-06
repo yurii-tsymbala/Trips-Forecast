@@ -8,7 +8,7 @@ import { Weather } from '../models/Weather';
 })
 export class TripService {
   private readonly tripsKey = 'trips';
-  private readonly apiKey = 'CARMJJR6XZR3BHGY5S8HWT7PK';
+  private readonly apiKey = 'AGPEN7R32U9ERDSMKNTT2K2X2';
   private trips$ = new BehaviorSubject<Trip[]>([]);
   private weathers$ = new BehaviorSubject<Weather[]>([]);
   private currentWeather$ = new Subject<Weather>();

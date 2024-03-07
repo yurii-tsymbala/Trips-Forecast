@@ -91,9 +91,9 @@ export class TripService {
       localStorage.getItem(this.tripsKey) == undefined
     ) {
       let trips = [
-        new Trip(0, 'Kyiv', 1711974323, 1712492723),
-        new Trip(1, 'Barcelona', 1712233523, 1713529523),
-        new Trip(2, 'Amsterdam', 1712751923, 1713702323),
+        new Trip(0, 'Kyiv', 1710330345, 1710935145),
+        new Trip(1, 'Barcelona', 1710416745, 1711194345),
+        new Trip(2, 'Amsterdam', 1710503145, 1711539945),
       ];
 
       localStorage.setItem(this.tripsKey, JSON.stringify(trips));
